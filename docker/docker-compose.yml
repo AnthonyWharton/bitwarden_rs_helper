@@ -1,0 +1,29 @@
+version: '3'
+services:
+  bitwarden_rs:
+    image: mprasil/bitwarden:latest
+    restart: always
+    env_file:
+      - global.env
+    volumes:
+      - ../bwdata/:/data/
+  nginx:
+    image: nginx:1.15-alpine
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - "bitwarden_rs:bitwarden"
+    volumes:
+      - ../nginx/conf.d/:/etc/nginx/conf.d/
+      - ../nginx/snippets/:/etc/nginx/snippets/
+      - ../nginx/htpasswd:/etc/nginx/htpasswd
+      - ../letsencrypt:/etc/letsencrypt
+      - ../certbot-www:/var/www/certbot
+  certbot:
+    image: certbot/certbot
+    entrypoint: /bin/true
+    volumes:
+      - ../letsencrypt:/etc/letsencrypt
+      - ../certbot-www:/var/www/certbot
