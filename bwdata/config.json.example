@@ -1,0 +1,18 @@
+{
+  "domain": "https://vault.address.tld",
+  "disable_icon_download": false,
+  "signups_allowed": true,
+  "invitations_allowed": true,
+  "password_iterations": 100000,
+  "show_password_hint": true,
+  "admin_token": "something_super_super_secret_CHANGE_ME",
+  "icon_cache_ttl": 2592000,
+  "icon_cache_negttl": 259200,
+  "icon_download_timeout": 10,
+  "disable_2fa_remember": false,
+  "reload_templates": false,
+  "log_mounts": false,
+  "disable_admin_token": false,
+  "_enable_yubico": false,
+  "_enable_smtp": true
+}
