@@ -1,0 +1,10 @@
+#!/bin/bash
+# Script Config File
+# Duplicate this example file and call it 'script_config' and leave it in the
+# root directory of the repo, alongside bitwarden_rs.sh.
+
+# Email address for Let's Encrypt expiry notifications
+EMAIL="email@address.tld"
+
+# Domain address for the vault to be located at
+DOMAIN="vault.address.tld"

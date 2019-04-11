@@ -3,10 +3,6 @@
 # bitwarden_rs.sh - helper for setting up bitwarden_rs with docker-compose
 # Run ./bitwarden_rs.sh help for usage
 
-# EDIT THE FOLLOWING:
-EMAIL="name@address.tld"
-DOMAIN="vault.address.tld"
-
 # Formatting convenience functions
 rs=$(echo -e "\e[0m")
 re=$(echo -e "\e[31m")
@@ -18,6 +14,7 @@ cy=$(echo -e "\e[36m")
 
 # Change directory to location of bitwarden_rs.sh
 cd "${0%/*}"
+source script_config
 
 # Installs the Let's Encrypt certificates
 function install_certs {
