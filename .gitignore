@@ -1,0 +1,6 @@
+# Ignore everything by default, lots of sensitive information in this folder
+# so we will carefully and explicitly add things manually.
+*
+*/
+!.gitignore
+!README.md
