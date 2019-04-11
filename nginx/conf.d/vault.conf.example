@@ -1,0 +1,69 @@
+# Redirect HTTP requests to HTTPS
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	server_name vault.address.tld;
+
+	location / {
+		return 301 https://vault.address.tld$request_uri;
+	}
+
+	# For Let's Encrypt WWW challenges
+	location ~ /.well-known/acme-challenge {
+		root /var/www/certbot;
+	}
+
+}
+
+###__HTTPS_MARK__ ~~~ DO NOT REMOVE THIS LINE ~~~
+
+# HTTPS Rules to pass to bitwarden
+server {
+	listen 443 ssl http2 default_server;
+	listen [::]:443 ssl http2 default_server;
+	server_name vault.address.tld;
+
+	# Specify SSL config if using a shared one.
+	include snippets/ssl-params.conf;
+
+	# Allow large attachments
+	client_max_body_size 128M;
+
+	location / {
+		proxy_pass http://bitwarden:80;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto $scheme;
+	}
+
+	location /notifications/hub {
+		proxy_pass http://bitwarden:3012;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection "upgrade";
+	}
+
+	location /notifications/hub/negotiate {
+		proxy_pass http://bitwarden:80;
+	}
+
+	# Optionally add extra authentication besides the AUTH_TOKEN
+	# If you don't want this, leave this part out
+	location /admin {
+		# See: https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/
+		auth_basic "Restricted Content";
+		auth_basic_user_file /etc/nginx/htpasswd;
+
+		proxy_pass http://bitwarden:80;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto $scheme;
+	}
+
+	# Stop access to ht files
+	location ~ /\.ht {
+	        deny all;
+	}
+}
