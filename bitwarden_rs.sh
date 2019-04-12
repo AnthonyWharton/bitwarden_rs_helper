@@ -64,7 +64,7 @@ function install_certs {
 
 # Installs a cron job to update the certs every day
 function install_cron {
-	CRON_LINE=$(echo -e "25 *\t* * *\tbitwarden\t$(pwd)/bitwarden_rs.sh u")
+	CRON_LINE=$(echo -e "25 4\t* * *\tbitwarden\t$(pwd)/bitwarden_rs.sh u")
 	echo "${yl}Installing cron job into ${cy}/etc/crontab${rs}"
 	if [ "$EUID" -ne 0 ]; then
 		echo "${re}You need to be root in order to install the automatic cron job"
