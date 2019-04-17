@@ -173,11 +173,11 @@ case "$1" in
 		dc_pull
 		update_certs
 		dc_up
-		echo "${gr}Done!${yl} bitwarden_rs is now running."
+		echo "${gr}Done!${yl} bitwarden_rs is now running.${rs}"
 		;;
 	d|down)
 		dc_down
-		echo "${gr}Done!${yl} bitwarden_rs has been stopped."
+		echo "${gr}Done!${yl} bitwarden_rs has been stopped.${rs}"
 		;;
 	*)
 		if [ "$1" != "help" -a "$1" != "h" ]; then
