@@ -1,14 +1,14 @@
 version: '3'
 services:
   bitwarden_rs:
-    image: mprasil/bitwarden:latest
+    image: bitwardenrs/server:latest
     restart: always
     env_file:
       - global.env
     volumes:
       - ../bwdata/:/data/
   nginx:
-    image: nginx:1.15-alpine
+    image: nginx:alpine
     restart: always
     ports:
       - "80:80"
